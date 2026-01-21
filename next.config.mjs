@@ -41,7 +41,19 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'flowbite.com',
+        hostname: 'abcd.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+       {
+        protocol: 'http',
+        hostname: 'test.com',
         port: '',
         pathname: '/**',
       },
