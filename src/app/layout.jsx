@@ -3,11 +3,16 @@ import Link from "next/link";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Roboto  } from 'next/font/google'
+
+ const roboto = Roboto ({
+  subsets: ['latin'],
+})
 
 const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
         <header className=" text-white ">
           <nav>
