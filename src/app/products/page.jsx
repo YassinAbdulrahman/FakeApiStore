@@ -1,8 +1,9 @@
 "use client";
+import CategoryItem from "@/components/categoryItem";
+import ProductList from "@/components/productlist";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import { ShimmerPostList } from "react-shimmer-effects";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -51,21 +52,21 @@ export default function ProductsPage() {
           : getProducts(),
   });
 
-
   // Using useQuery For Product to get Data and others
   const { data: categories, isPending } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => await getCategory(),
   });
 
-
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <ShimmerPostList postStyle="STYLE_FOUR" col={4} row={4} gap={30} />
+    );
   }
   if (isError) {
     return <h1>Error occurred</h1>;
   }
-  
+
   const handleSearch = (e) => {
     setSearchByTitle(e.target.value);
   };
@@ -82,74 +83,21 @@ export default function ProductsPage() {
       </form>
 
       <div className="flex justify-center items-center flex-wrap">
-        {isPending ? (
-          <h2>Loading...</h2>
-        ) : (
-          categories.map((category) => {
+        {categories?.length > 0 ? (
+          categories?.map((category) => {
             return (
-              <button
-                data-ripple-light="true"
-                className="rounded-md mb-3 bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                type="button"
-                key={category.id}
-                onClick={() => {
-                  setSelectedCategory(category.id);
-                }}
-              >
-                {category.name}
-              </button>
+              <CategoryItem key={category.id} category={category} setSelectedCategory={setSelectedCategory}/>
             );
           })
-        )}
+        ) : <h2>There is No Category Available</h2>}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6  justify-items-center">
-        {products.map((product) => {
-          return (
-            <div
-              key={product.id}
-              className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96"
-            >
-              <div className="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
-                <Image
-                  src={
-                    product.images[1]
-                      ? product.images[1]
-                      : "https://placehold.co/600x400/png"
-                  }
-                  className="w-full h-full object-cover object-center"
-                  alt="card-image"
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <div className="p-4">
-                <span className="block border-2 border-solid border-b-black p-1 mb-2   w-fit shadow-2xl">
-                  {product.category.name}
-                </span>
-                <h6 className="mb-2 text-slate-800 text-xl font-semibold">
-                  {product.title}
-                </h6>
-                <p className="text-slate-600 leading-normal font-light">
-                  {product.description}
-                </p>
-                <p className="text-slate-600 leading-normal font-light">
-                  ${product.price}
-                </p>
-              </div>
-              <div className="px-4 pb-4 pt-0 mt-2">
-                <Link href={`/products/${product.id}`}>
-                  <button
-                    className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button"
-                  >
-                    Read more
-                  </button>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+      <div>
+        {products.length > 0 ? (
+          <ProductList products={products} />
+        ) : (
+          <h2>There is No Products Available</h2>
+        )}
       </div>
     </>
   );

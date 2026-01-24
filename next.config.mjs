@@ -68,6 +68,24 @@ const nextConfig = {
         hostname: '127.0.0.1',
 
       },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.samsung.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'compujordan.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

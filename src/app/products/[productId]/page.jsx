@@ -29,12 +29,12 @@ export default function productDetail({ params }) {
   console.log(singleProduct);
   
   return (
-    <div>
-       <Image src={singleProduct.images[0]} alt={singleProduct.title} width={500} height={500}/>
-       <h2>{singleProduct.title}</h2>
-       <p>{singleProduct.price}</p>
-       <p>{singleProduct.description}</p>
-       <p>{singleProduct.category.name}</p>
+    <div className="flex flex-col gap-4">
+       <Image  className="object-contain" src={singleProduct?.images?.[0] || "/placeholder.png"} alt={singleProduct.title} width={500} height={500}/>
+       <h2 className="text-sm text-gray-500 uppercase tracking-wide">{singleProduct.title}</h2>
+       <p className="text-3xl font-bold text-gray-900">${singleProduct.price}</p>
+       <p className="text-2xl font-semibold text-green-600">{singleProduct.description}</p>
+       <p className="text-gray-700 leading-relaxed">{singleProduct.category.name}</p>
     </div>
   );
 }
