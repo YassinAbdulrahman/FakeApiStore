@@ -26,7 +26,6 @@ export default function productDetail({ params }) {
   if (isError) {
     return <h1>Error occurred</h1>;
   }  
-  console.log(singleProduct);
   
   return (
     <div className="flex flex-col gap-4">
